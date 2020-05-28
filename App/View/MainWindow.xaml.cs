@@ -1,7 +1,7 @@
 ﻿using System.Windows;
 
 
-namespace App
+namespace App.View
 {
     public partial class MainWindow : Window
     {
