@@ -22,7 +22,7 @@ namespace App.Models
 
         public decimal Money
         {
-            get => money;
+            get => decimal.Round( money/100, 2 );
             private set
             {
                 Notify( Math.Abs( money - value ) );
@@ -33,7 +33,7 @@ namespace App.Models
 
         public override string ToString()
         {
-            return money.ToString();
+            return Money.ToString();
         }
 
 

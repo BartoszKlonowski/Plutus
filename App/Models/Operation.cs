@@ -46,7 +46,7 @@ namespace App.Models
         public Operation Clone( decimal amount )
         {
             var clone = Clone();
-            clone.Amount = amount;
+            clone.Amount += amount;
 
             return clone;
         }
