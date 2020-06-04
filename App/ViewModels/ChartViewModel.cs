@@ -2,11 +2,13 @@
 using OxyPlot;
 using OxyPlot.Series;
 using System.ComponentModel;
+using System.Dynamic;
+using System.Linq;
 
 
 namespace App.ViewModels
 {
-    public class ChartViewModel : INotifyPropertyChanged
+    public class ChartViewModel : INotifyPropertyChanged, IObserver
     {
         public ChartViewModel()
         {
@@ -15,6 +17,12 @@ namespace App.ViewModels
                 Title = "Wykaz stanu portfela",
                 Subtitle = $"Użytkownika: "
             };
+
+            Operations.Points.Add( new DataPoint( 0, 0 ) );
+            Summary.Points.Add( new DataPoint( 0, 0 ) );
+            plot.Series.Add( Operations );
+            plot.Series.Add( Summary );
+            chart = new Chart();
         }
 
 
@@ -37,26 +45,34 @@ namespace App.ViewModels
         }
 
 
-        public void Update()
+        public LineSeries Operations { get; } = new LineSeries
         {
-            // Create two line series (markers are hidden by default)
-            var series1 = new LineSeries { Title = "Series 1", MarkerType = MarkerType.Circle };
-            series1.Points.Add( new DataPoint( 0, 0 ) );
-            series1.Points.Add( new DataPoint( 10, 18 ) );
-            series1.Points.Add( new DataPoint( 20, 12 ) );
-            series1.Points.Add( new DataPoint( 30, 8 ) );
-            series1.Points.Add( new DataPoint( 40, 15 ) );
+            Title = "Operacje na portfelu",
+            MarkerType = MarkerType.Circle,
+            Color = OxyColors.Brown
+        };
 
-            var series2 = new LineSeries { Title = "Series 2", MarkerType = MarkerType.Square };
-            series2.Points.Add( new DataPoint( 0, 4 ) );
-            series2.Points.Add( new DataPoint( 10, 12 ) );
-            series2.Points.Add( new DataPoint( 20, 16 ) );
-            series2.Points.Add( new DataPoint( 30, 25 ) );
-            series2.Points.Add( new DataPoint( 40, 5 ) );
+        public LineSeries Summary { get; } = new LineSeries
+        {
+            Title = "Stan portfela",
+            MarkerType = MarkerType.Diamond,
+            Color = OxyColors.LawnGreen
+        };
+
+
+        public void Update( ITopic topic, decimal amount, decimal accountMoney )
+        {
+            chart.Update( topic, amount );
+            plot.Series.Remove( Operations );
+            plot.Series.Remove( Summary );
+            Operations.Points.Add( new DataPoint( chart.Operations.Last().ID, decimal.ToDouble(chart.Operations.Last().Amount) ) );
+            Summary.Points.Add( new DataPoint( chart.Operations.Last().ID, decimal.ToDouble( accountMoney ) ) );
+            plot.Series.Add( Summary );
+            plot.Series.Add( Operations );
+            OnPropertyChanged( nameof( Plot ) );
         }
 
-
         private PlotModel plot;
-        private Chart chart;
+        public readonly Chart chart;
     }
 }

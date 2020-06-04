@@ -1,5 +1,7 @@
-﻿using System;
+﻿using App.ViewModels;
+using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 
 
@@ -7,19 +9,19 @@ namespace App.Models
 {
     public interface IObserver
     {
-        public void Update( ITopic topic, decimal amount );
+        public void Update( ITopic topic, decimal amount, decimal accountMoney );
     }
 
 
-    public class Chart : IObserver
+    public class Chart
     {
         public Chart()
         {
-            Operations = new List<Operation>();
+            Operations = new ObservableCollection<Operation>();
         }
 
 
-        public List<Operation> Operations
+        public ObservableCollection<Operation> Operations
         {
             get;
             private set;
@@ -28,7 +30,7 @@ namespace App.Models
 
         public void Update( ITopic topic, decimal amount )
         {
-            if( topic is Wallet )
+            if( topic is WalletViewModel )
             {
                 if( Operations.Any() )
                     Operations.Add( Operations.Last().Clone( amount ) );

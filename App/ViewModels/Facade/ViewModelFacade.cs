@@ -10,6 +10,14 @@
         {
             Chart = new ChartViewModel();
             Wallet = new WalletViewModel();
+
+            RegisterChartAsAnObserver();
+        }
+
+
+        private void RegisterChartAsAnObserver()
+        {
+            Wallet.Attach( Chart );
         }
 
         // Sometimes the Facade pattern can also cover part of logic that is implemented by it's subclasses

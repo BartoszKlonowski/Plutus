@@ -3,9 +3,10 @@ using App.Models;
 using System.ComponentModel;
 using System.Windows.Input;
 
+
 namespace App.ViewModels
 {
-    public class WalletViewModel : INotifyPropertyChanged
+    public class WalletViewModel : INotifyPropertyChanged, ITopic
     {
         public WalletViewModel()
         {
@@ -60,6 +61,18 @@ namespace App.ViewModels
             get;
             set;
         }
+
+
+        public void AttachObserverToWallet( IObserver observer )
+        {
+            wallet.Attach( observer );
+        }
+
+        public void Attach( IObserver observer ) => wallet.Attach( observer );
+
+        public void Detach( IObserver observer ) => wallet.Detach( observer );
+
+        public void Notify( decimal amount ) => wallet.Notify( amount );
 
 
         private Wallet wallet;

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using App.ViewModels;
+using System;
 using System.Collections.Generic;
 
 
@@ -13,7 +14,7 @@ namespace App.Models
     }
 
 
-    public class Wallet : ITopic
+    public class Wallet
     {
         public void Income( decimal amount ) => Money += amount;
 
@@ -25,8 +26,9 @@ namespace App.Models
             get => decimal.Round( money, 2 );
             private set
             {
-                Notify( Math.Abs( money - value ) );
+                decimal previousMoney = money;
                 money = value;
+                Notify( Math.Abs( previousMoney - value ) );
             }
         }
 
@@ -46,7 +48,7 @@ namespace App.Models
         {
             foreach( var observer in observers )
             {
-                observer.Update( this, amount );
+                observer.Update( new WalletViewModel(), amount, Money );
             }
         }
 
