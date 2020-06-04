@@ -1,6 +1,7 @@
-﻿using App.Models;
+﻿using App.Command;
+using App.Models;
 using System.ComponentModel;
-
+using System.Windows.Input;
 
 namespace App.ViewModels
 {
@@ -9,6 +10,9 @@ namespace App.ViewModels
         public WalletViewModel()
         {
             wallet = new Wallet();
+
+            Income = new RelayCommand( IncomeWrap );
+            Outcome = new RelayCommand( OutcomeWrap );
         }
 
 
@@ -17,6 +21,30 @@ namespace App.ViewModels
         protected virtual void OnPropertyChanged( string propertyName )
         {
             PropertyChanged?.Invoke( this, new PropertyChangedEventArgs( propertyName ) );
+        }
+
+
+        private void IncomeWrap()
+        {
+            wallet.Income( Amount );
+            OnPropertyChanged( nameof( Wallet ) );
+        }
+        public ICommand Income
+        {
+            get;
+            private set;
+        }
+
+
+        private void OutcomeWrap()
+        {
+            wallet.Outcome( Amount );
+            OnPropertyChanged( nameof( Wallet ) );
+        }
+        public ICommand Outcome
+        {
+            get;
+            private set;
         }
 
 
