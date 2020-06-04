@@ -5,6 +5,11 @@ using System.Collections.Generic;
 
 namespace App.Models
 {
+    /// <summary>
+    /// Interface representing the object to be observed by another objects.
+    /// Allows to attach and detach observers to the list
+    /// and to notify about any action (in this case about amount of operation made on wallet)
+    /// </summary>
     public interface ITopic
     {
         public void Attach( IObserver observer );
@@ -29,6 +34,7 @@ namespace App.Models
                 decimal previousMoney = money;
                 money = value;
                 Notify( Math.Abs( previousMoney - value ) );
+                User.Instance.UpdateStats( money );
             }
         }
 

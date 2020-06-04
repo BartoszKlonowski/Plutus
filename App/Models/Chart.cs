@@ -7,6 +7,10 @@ using System.Linq;
 
 namespace App.Models
 {
+    /// <summary>
+    /// IObserver interface forces the class to implement the method that will allow to react on ITopic activity
+    /// This method is called by ITopic when Notify() occurs
+    /// </summary>
     public interface IObserver
     {
         public void Update( ITopic topic, decimal amount, decimal accountMoney );

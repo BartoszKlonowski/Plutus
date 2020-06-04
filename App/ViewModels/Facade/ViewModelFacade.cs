@@ -1,4 +1,6 @@
-﻿namespace App.ViewModels.Facade
+﻿using App.Models;
+
+namespace App.ViewModels.Facade
 {
     // Represents the Facade design pattern which is responsible for providing convenient access
     // to a particular part of the subsystem’s functionality.
@@ -10,6 +12,7 @@
         {
             Chart = new ChartViewModel();
             Wallet = new WalletViewModel();
+            User = User.Instance;
 
             RegisterChartAsAnObserver();
         }
@@ -26,5 +29,6 @@
         // Subclasses of Facade
         public ChartViewModel Chart { get; }
         public WalletViewModel Wallet { get; }
+        public User User { get; }
     }
 }

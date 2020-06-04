@@ -27,6 +27,28 @@
                 <Button Margin="10" Height="25" Command="{Binding Wallet.Income}">Wpłata</Button>
                 <Button Margin="10" Height="25" Command="{Binding Wallet.Outcome}">Wypłata</Button>
             </StackPanel>
+
+            <Grid Margin="10">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <Label FontSize="15" Grid.ColumnSpan="2">Użytkownik:</Label>
+                <Label FontSize="10" Grid.Column="0" Grid.Row="1">Imię:</Label>
+                <TextBox Grid.Column="1" Grid.Row="1" Background="LightGray" Width="auto" Text="{Binding User.Name, Mode=TwoWay}"></TextBox>
+                <Label Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="2" FontSize="10">Kwota maksymalna:</Label>
+                <TextBlock Grid.Column="0" Grid.Row="3" FontSize="10" HorizontalAlignment="Center" Text="{Binding User.MaxAccountState}"/>
+                <Label Grid.Column="0" Grid.Row="4" Grid.ColumnSpan="2" FontSize="10">Kwota minimalna:</Label>
+                <TextBlock Grid.Column="0" Grid.Row="5" FontSize="10" HorizontalAlignment="Center" Text="{Binding User.MinAccountState}"/>
+            </Grid>
         </StackPanel>
 
         <Label Grid.Row="1" Grid.Column="0" Margin="5" FontSize="15">Obecne fundusze:</Label>

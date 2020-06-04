@@ -6,6 +6,13 @@ using System.Windows.Input;
 
 namespace App.ViewModels
 {
+    /// <summary>
+    /// Class representing the model for the View in the MVVM design pattern
+    /// This class represents the Wallet adjusted to the needs of View
+    /// It implements:
+    /// INotifyPropertyChanged - so it's possible the commands to react and react on commands
+    /// ITopic - so it's possible to be observed by ChartViewModel
+    /// </summary>
     public class WalletViewModel : INotifyPropertyChanged, ITopic
     {
         public WalletViewModel()
