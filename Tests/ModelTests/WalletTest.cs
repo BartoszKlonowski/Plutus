@@ -13,7 +13,7 @@ namespace Tests.ModelTests
             var wallet = new Wallet();
             wallet.Income( 50 );
 
-            Assert.AreEqual( (decimal)0.50, wallet.Money );
+            Assert.AreEqual( (decimal)50, wallet.Money );
         }
 
 
@@ -23,7 +23,7 @@ namespace Tests.ModelTests
             var wallet = new Wallet();
             wallet.Outcome( 100 );
 
-            Assert.AreEqual( (decimal)-1.00, wallet.Money );
+            Assert.AreEqual( (decimal)-100, wallet.Money );
         }
 
 
@@ -33,7 +33,7 @@ namespace Tests.ModelTests
             var wallet = new Wallet();
             wallet.Income( -12345 );
 
-            Assert.AreEqual( "-123,45", wallet.ToString() );
+            Assert.AreEqual( "-12345 zł", wallet.ToString() );
         }
     }
 }
