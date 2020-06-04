@@ -3,7 +3,7 @@
 
 namespace App
 {
-    public partial class App : Application
+    public partial class MainApp : Application
     {
     }
 }
