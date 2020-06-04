@@ -8,6 +8,7 @@ namespace App.View
         public MainWindow()
         {
             InitializeComponent();
+            DataContext = this;
         }
     }
 }
