@@ -1,5 +1,6 @@
 ﻿using App.Models;
 using OxyPlot;
+using OxyPlot.Axes;
 using OxyPlot.Series;
 using System.ComponentModel;
 using System.Dynamic;
@@ -24,10 +25,8 @@ namespace App.ViewModels
                 Title = "Wykaz stanu portfela"
             };
 
-            Operations.Points.Add( new DataPoint( 0, 0 ) );
-            Summary.Points.Add( new DataPoint( 0, 0 ) );
-            plot.Series.Add( Operations );
-            plot.Series.Add( Summary );
+            CreatePlotModel();
+
             chart = new Chart();
         }
 
@@ -73,6 +72,38 @@ namespace App.ViewModels
             Summary.Points.Add( new DataPoint( chart.Operations.Last().ID, decimal.ToDouble( accountMoney ) ) );
             OnPropertyChanged( nameof( Plot ) );
         }
+
+
+
+        private void CreatePlotModel()
+        {
+            plot.Series.Add( Operations );
+            plot.Series.Add( Summary );
+
+            plot.Axes.Add( new LinearAxis
+            {
+                Title = "Kwota",
+                Unit = "zł",
+                TitleFontSize = 12,
+                TitleFontWeight = FontWeights.Bold,
+                MajorGridlineStyle = LineStyle.Solid,
+                MinorGridlineStyle = LineStyle.Solid,
+                Position = AxisPosition.Left
+            } );
+
+            plot.Axes.Add( new LinearAxis
+            {
+                Title = "Numer operacji",
+                TitleFontSize = 12,
+                TitleFontWeight = FontWeights.Bold,
+                MajorGridlineStyle = LineStyle.Solid,
+                MinorGridlineStyle = LineStyle.Solid,
+                Position = AxisPosition.Bottom,
+                AbsoluteMinimum = 0,
+                AbsoluteMaximum = 100
+            } );
+        }
+
 
         private PlotModel plot;
         public readonly Chart chart;
