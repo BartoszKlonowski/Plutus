@@ -33,11 +33,19 @@ namespace App.Models
         }
 
 
+        public string UserName
+        {
+            get;
+            set;
+        }
+
+
         public Operation Clone()
         {
             var clone = this.MemberwiseClone() as Operation;
             clone.ID++;
             clone.Time = DateTime.Now;
+            clone.UserName = User.Instance.Name;
 
             return clone;
         }
