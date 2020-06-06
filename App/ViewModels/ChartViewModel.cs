@@ -74,6 +74,12 @@ namespace App.ViewModels
         }
 
 
+        public Operation Update( ITopic topic, int operationID )
+        {
+            return chart.Operations[operationID];
+        }
+
+
 
         private void CreatePlotModel()
         {

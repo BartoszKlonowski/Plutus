@@ -1,5 +1,5 @@
 ﻿using System;
-
+using System.ComponentModel;
 
 namespace App.Models
 {
@@ -10,33 +10,56 @@ namespace App.Models
     }
 
 
-    public class Operation : IOperationPrototype
+    public class Operation : IOperationPrototype, INotifyPropertyChanged
     {
+        public event PropertyChangedEventHandler PropertyChanged = ( sender, e ) => { };
+
+        protected virtual void OnPropertyChanged( string propertyName )
+        {
+            PropertyChanged?.Invoke( this, new PropertyChangedEventArgs( propertyName ) );
+        }
+
         public int ID
         {
-            get;
-            set;
+            get => id;
+            set
+            {
+                id = value;
+                OnPropertyChanged( nameof( ID ) );
+            }
         }
 
 
         public DateTime Time
         {
-            get;
-            set;
+            get => time;
+            set
+            {
+                time = value;
+                OnPropertyChanged( nameof( time ) );
+            }
         }
 
 
         public decimal Amount
         {
-            get;
-            set;
+            get => amount;
+            set
+            {
+                amount = value;
+                OnPropertyChanged( nameof( amount ) );
+            }
         }
 
 
         public string UserName
         {
-            get;
-            set;
+            get => userName;
+            set
+            {
+                userName = value;
+                OnPropertyChanged( nameof( UserName ) );
+            }
         }
 
 
@@ -58,5 +81,10 @@ namespace App.Models
 
             return clone;
         }
+
+        private string userName;
+        private decimal amount;
+        private DateTime time;
+        private int id;
     }
 }

@@ -1,8 +1,11 @@
 ﻿using App.Command;
 using App.Models;
 using System.ComponentModel;
+using System.Windows.Documents;
 using System.Windows.Input;
-
+using System.Collections.Generic;
+using System.Linq;
+using System.Collections.ObjectModel;
 
 namespace App.ViewModels
 {
@@ -18,6 +21,7 @@ namespace App.ViewModels
         public WalletViewModel()
         {
             wallet = new Wallet();
+            operationsIDs = new ObservableCollection<int>();
 
             Income = new RelayCommand( IncomeWrap );
             Outcome = new RelayCommand( OutcomeWrap );
@@ -35,6 +39,10 @@ namespace App.ViewModels
         private void IncomeWrap()
         {
             wallet.Income( Amount );
+            if( operationsIDs.Any() )
+                operationsIDs.Add( operationsIDs.Last() + 1 );
+            else
+                operationsIDs.Add( 0 );
             OnPropertyChanged( nameof( Wallet ) );
         }
         public ICommand Income
@@ -47,6 +55,10 @@ namespace App.ViewModels
         private void OutcomeWrap()
         {
             wallet.Outcome( Amount );
+            if( operationsIDs.Any() )
+                operationsIDs.Add( operationsIDs.Last() + 1 );
+            else
+                operationsIDs.Add( 0 );
             OnPropertyChanged( nameof( Wallet ) );
         }
         public ICommand Outcome
@@ -70,6 +82,39 @@ namespace App.ViewModels
         }
 
 
+        public ObservableCollection<int> OperationsIDs
+        {
+            get => operationsIDs;
+            set
+            {
+                operationsIDs.Add( value.Last() );
+                OnPropertyChanged( nameof( OperationsIDs ) );
+            }
+        }
+
+
+        public int SelectedItem
+        {
+            get => selectedItem;
+            set
+            {
+                selectedItem = value;
+                Notify( selectedItem );
+            }
+        }
+
+
+        public Operation SelectedOperation
+        {
+            get => selectedOperation;
+            set
+            {
+                selectedOperation = value;
+                OnPropertyChanged( nameof( SelectedOperation ) );
+            }
+        }
+
+
         public void AttachObserverToWallet( IObserver observer )
         {
             wallet.Attach( observer );
@@ -81,7 +126,12 @@ namespace App.ViewModels
 
         public void Notify( decimal amount ) => wallet.Notify( amount );
 
+        public void Notify( int operationID ) => SelectedOperation = wallet.Notify( operationID );
+
 
         private Wallet wallet;
+        private ObservableCollection<int> operationsIDs;
+        private int selectedItem;
+        private Operation selectedOperation;
     }
 }

@@ -14,6 +14,7 @@ namespace App.Models
     public interface IObserver
     {
         public void Update( ITopic topic, decimal amount, decimal accountMoney );
+        public Operation Update( ITopic topic, int operationID );
     }
 
 
@@ -47,6 +48,7 @@ namespace App.Models
         private void AddFirstElement( decimal amount )
         {
             var operation = new Operation();
+            operation.UserName = User.Instance.Name;
             operation.ID = 0;
             operation.Time = DateTime.Now;
             operation.Amount = amount;

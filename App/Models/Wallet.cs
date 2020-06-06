@@ -1,7 +1,7 @@
 ﻿using App.ViewModels;
 using System;
 using System.Collections.Generic;
-
+using System.Linq;
 
 namespace App.Models
 {
@@ -16,6 +16,7 @@ namespace App.Models
         public void Detach( IObserver observer );
 
         public void Notify( decimal amount );
+        public void Notify( int operationID );
     }
 
 
@@ -56,6 +57,13 @@ namespace App.Models
             {
                 observer.Update( new WalletViewModel(), amount, Money );
             }
+        }
+
+
+        public Operation Notify( int operationID )
+        {
+            /// For now we can assume that there's only one observer: Chart
+            return observers.First().Update( new WalletViewModel(), operationID );
         }
 
 

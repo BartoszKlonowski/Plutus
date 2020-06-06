@@ -6,12 +6,13 @@
         xmlns:oxy="clr-namespace:OxyPlot.Wpf;assembly=OxyPlot.Wpf"
         xmlns:local="clr-namespace:App"
         mc:Ignorable="d"
-        Title="Plutus" Height="450" Width="800">
+        Title="Plutus" Height="500" Width="1000">
 
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="2*"/>
-            <ColumnDefinition Width="8*"/>
+            <ColumnDefinition Width="3*"/>
+            <ColumnDefinition Width="6*"/>
+            <ColumnDefinition Width="3*"/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="9*"/>
@@ -41,19 +42,51 @@
                     <RowDefinition Height="*"/>
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
-                <Label FontSize="15" Grid.ColumnSpan="2">Użytkownik:</Label>
-                <Label FontSize="10" Grid.Column="0" Grid.Row="1">Imię:</Label>
-                <TextBox Grid.Column="1" Grid.Row="1" Background="LightGray" Width="auto" Text="{Binding User.Name, Mode=TwoWay}"></TextBox>
-                <Label Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="2" FontSize="10">Kwota maksymalna:</Label>
-                <TextBlock Grid.Column="0" Grid.Row="3" FontSize="10" HorizontalAlignment="Center" Text="{Binding User.MaxAccountState}"/>
-                <Label Grid.Column="0" Grid.Row="4" Grid.ColumnSpan="2" FontSize="10">Kwota minimalna:</Label>
-                <TextBlock Grid.Column="0" Grid.Row="5" FontSize="10" HorizontalAlignment="Center" Text="{Binding User.MinAccountState}"/>
+                <Label FontSize="15" Grid.ColumnSpan="2" HorizontalAlignment="Left">Użytkownik:</Label>
+                <Label FontSize="15" Grid.Column="0" Grid.Row="1" FontWeight="Bold">Imię:</Label>
+                <TextBox Grid.Column="1" Grid.Row="1" Background="LightGray" Width="auto" VerticalAlignment="Center" Text="{Binding User.Name, Mode=TwoWay}"></TextBox>
+                <Label Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="2" FontSize="15" FontWeight="Bold">Kwota maksymalna:</Label>
+                <TextBlock Grid.Column="0" Grid.Row="3" FontSize="15" HorizontalAlignment="Right" Text="{Binding User.MaxAccountState}"/>
+                <Label Grid.Column="0" Grid.Row="4" Grid.ColumnSpan="2" FontSize="15" FontWeight="Bold">Kwota minimalna:</Label>
+                <TextBlock Grid.Column="0" Grid.Row="5" FontSize="15" HorizontalAlignment="Right" Text="{Binding User.MinAccountState}"/>
             </Grid>
         </StackPanel>
 
-        <Label Grid.Row="1" Grid.Column="0" Margin="5" FontSize="15">Obecne fundusze:</Label>
+        <Label Grid.Row="1" Grid.Column="0" Margin="5" FontSize="15" FontWeight="Bold">Obecne fundusze:</Label>
         <Label Grid.Row="1" Grid.Column="1" Margin="5" FontSize="15" Content="{Binding Wallet.Wallet, Mode=TwoWay}"/>
 
         <oxy:PlotView Model="{Binding Chart.Plot, Mode=TwoWay}" Grid.Row="0" Grid.Column="1"/>
+
+        <StackPanel Margin="10" Background="LightGray" Grid.Column="3" Grid.Row="0">
+            <StackPanel Orientation="Horizontal">
+                <Label FontSize="15" Margin="5">Dane operacji:</Label>
+                <ComboBox ItemsSource="{Binding Wallet.OperationsIDs, Mode=TwoWay}" SelectedItem="{Binding Wallet.SelectedItem}" VerticalAlignment="Center"></ComboBox>
+            </StackPanel>
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+
+                <StackPanel Grid.Row="0" Orientation="Horizontal">
+                    <Label FontSize="15" FontWeight="Bold">Wykonał:</Label>
+                    <TextBlock FontSize="15" VerticalAlignment="Center" Text="{Binding Wallet.SelectedOperation.UserName, Mode=TwoWay}" Width="auto"/>
+                </StackPanel>
+                <StackPanel Grid.Row="1" Orientation="Horizontal">
+                    <Label FontSize="15" FontWeight="Bold">Dnia:</Label>
+                    <TextBlock FontSize="15" VerticalAlignment="Center" Text="{Binding Wallet.SelectedOperation.Time, Mode=TwoWay}" Width="auto"/>
+                </StackPanel>
+                <StackPanel Grid.Row="2" Orientation="Horizontal">
+                    <Label FontSize="15" FontWeight="Bold">W kwocie:</Label>
+                    <TextBlock FontSize="15" VerticalAlignment="Center" Text="{Binding Wallet.SelectedOperation.Amount, Mode=TwoWay}" Width="auto"/>
+                </StackPanel>
+                <StackPanel Grid.Row="3" Orientation="Horizontal">
+                    <Label FontSize="15" FontWeight="Bold">O numerze:</Label>
+                    <TextBlock FontSize="15" VerticalAlignment="Center" Text="{Binding Wallet.SelectedOperation.ID, Mode=TwoWay}" Width="auto"/>
+                </StackPanel>
+            </Grid>
+        </StackPanel>
     </Grid>
 </Window>
