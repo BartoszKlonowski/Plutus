@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
+
 namespace App.Models
 {
     /// <summary>
@@ -63,7 +64,19 @@ namespace App.Models
         public Operation Notify( int operationID )
         {
             /// For now we can assume that there's only one observer: Chart
-            return observers.First().Update( new WalletViewModel(), operationID );
+            /// But we still need to check if any has subscribed
+            if( observers.Any() )
+                return observers.First().Update( new WalletViewModel(), operationID );
+            else
+                /// return incorrect data indicating there's an error:
+                /// The fetch for Operation should not happen if there was no operation made yet
+                return new Operation
+                {
+                    ID = -1,
+                    UserName = "No user",
+                    Amount = -1,
+                    Time = DateTime.MinValue
+                };
         }
 
 

@@ -3,7 +3,6 @@ using OxyPlot;
 using OxyPlot.Axes;
 using OxyPlot.Series;
 using System.ComponentModel;
-using System.Dynamic;
 using System.Linq;
 
 

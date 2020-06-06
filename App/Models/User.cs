@@ -3,6 +3,13 @@
 
 namespace App.Models
 {
+    /// <summary>
+    /// User class implements the Singleton design pattern. It is useful to have the User's data reachable anywhere,
+    /// plus it's necessary to have ONLY ONE user's instance in the system.
+    ///
+    /// User also implements the INotifyPropertyChanged due to having it's data also displayed in the application
+    /// so each time View reaches for those data it expects them to use PropertyChanged event.
+    /// </summary>
     public class User : INotifyPropertyChanged
     {
         private User() { }

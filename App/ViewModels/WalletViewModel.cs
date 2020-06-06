@@ -1,11 +1,10 @@
 ﻿using App.Command;
 using App.Models;
 using System.ComponentModel;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Collections.Generic;
 using System.Linq;
 using System.Collections.ObjectModel;
+
 
 namespace App.ViewModels
 {
@@ -39,10 +38,7 @@ namespace App.ViewModels
         private void IncomeWrap()
         {
             wallet.Income( Amount );
-            if( operationsIDs.Any() )
-                operationsIDs.Add( operationsIDs.Last() + 1 );
-            else
-                operationsIDs.Add( 0 );
+            operationsIDs.Add( operationsIDs.Count );
             OnPropertyChanged( nameof( Wallet ) );
         }
         public ICommand Income
@@ -55,10 +51,7 @@ namespace App.ViewModels
         private void OutcomeWrap()
         {
             wallet.Outcome( Amount );
-            if( operationsIDs.Any() )
-                operationsIDs.Add( operationsIDs.Last() + 1 );
-            else
-                operationsIDs.Add( 0 );
+            operationsIDs.Add( operationsIDs.Count );
             OnPropertyChanged( nameof( Wallet ) );
         }
         public ICommand Outcome
