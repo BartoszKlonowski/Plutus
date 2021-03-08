@@ -1,0 +1,102 @@
+﻿<Window x:Class="App.View.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:oxy="clr-namespace:OxyPlot.Wpf;assembly=OxyPlot.Wpf"
+        mc:Ignorable="d"
+        Title="Plutus" Height="500" Width="1000">
+
+    <!-- Application uses only the MainWindow, so we design the main grid directly here -->
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="3*"/>
+            <ColumnDefinition Width="6*"/>
+            <ColumnDefinition Width="3*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="9*"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+
+        <!-- Left panel design implementation for the User's details and it's action controlls -->
+        <StackPanel Orientation="Vertical" Margin="20" Background="LightGray" Grid.Row="0" Grid.Column="0">
+            <StackPanel Orientation="Horizontal">
+                <Label FontSize="15">Kwota:</Label>
+                <TextBox Height="25" Width="60" VerticalContentAlignment="Center" Text="{Binding Wallet.Amount}"/>
+            </StackPanel>
+            <StackPanel>
+                <Button Margin="10" Height="25" Command="{Binding Wallet.Income}">Wpłata</Button>
+                <Button Margin="10" Height="25" Command="{Binding Wallet.Outcome}">Wypłata</Button>
+            </StackPanel>
+
+            <Grid Margin="10">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+
+                <Label FontSize="15" Grid.ColumnSpan="2" HorizontalAlignment="Left">Użytkownik:</Label>
+                <Label FontSize="15" Grid.Column="0" Grid.Row="1" FontWeight="Bold">Imię:</Label>
+                <TextBox Grid.Column="1" Grid.Row="1" Background="LightGray" Width="auto" VerticalAlignment="Center" Text="{Binding User.Name, Mode=TwoWay}"></TextBox>
+                <Label Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="2" FontSize="15" FontWeight="Bold">Kwota maksymalna:</Label>
+                <TextBlock Grid.Column="0" Grid.Row="3" FontSize="15" HorizontalAlignment="Right" Text="{Binding User.MaxAccountState}"/>
+                <Label Grid.Column="0" Grid.Row="4" Grid.ColumnSpan="2" FontSize="15" FontWeight="Bold">Kwota minimalna:</Label>
+                <TextBlock Grid.Column="0" Grid.Row="5" FontSize="15" HorizontalAlignment="Right" Text="{Binding User.MinAccountState}"/>
+            </Grid>
+        </StackPanel>
+
+
+        <!-- Bottom panel for the current amount display -->
+        <Label Grid.Row="1" Grid.Column="0" Margin="5" FontSize="15" FontWeight="Bold">Obecne fundusze:</Label>
+        <Label Grid.Row="1" Grid.Column="1" Margin="5" FontSize="15" Content="{Binding Wallet.Wallet, Mode=TwoWay}"/>
+
+
+        <!-- Main panel only for the Plot to be displayed -->
+        <oxy:PlotView Model="{Binding Chart.Plot, Mode=TwoWay}" Grid.Row="0" Grid.Column="1"/>
+
+
+        <!-- Right panel design for the Operation details display -->
+        <StackPanel Margin="10" Background="LightGray" Grid.Column="3" Grid.Row="0">
+            <StackPanel Orientation="Horizontal">
+                <Label FontSize="15" Margin="5">Dane operacji:</Label>
+                <ComboBox ItemsSource="{Binding Wallet.OperationsIDs, Mode=TwoWay}" SelectedItem="{Binding Wallet.SelectedItem}" VerticalAlignment="Center"></ComboBox>
+            </StackPanel>
+
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+
+                <StackPanel Grid.Row="0" Orientation="Horizontal">
+                    <Label FontSize="15" FontWeight="Bold">Wykonał:</Label>
+                    <TextBlock FontSize="15" VerticalAlignment="Center" Text="{Binding Wallet.SelectedOperation.UserName, Mode=TwoWay}" Width="auto"/>
+                </StackPanel>
+                <StackPanel Grid.Row="1" Orientation="Horizontal">
+                    <Label FontSize="15" FontWeight="Bold">Dnia:</Label>
+                    <TextBlock FontSize="15" VerticalAlignment="Center" Text="{Binding Wallet.SelectedOperation.Time, Mode=TwoWay}" Width="auto"/>
+                </StackPanel>
+                <StackPanel Grid.Row="2" Orientation="Horizontal">
+                    <Label FontSize="15" FontWeight="Bold">W kwocie:</Label>
+                    <TextBlock FontSize="15" VerticalAlignment="Center" Text="{Binding Wallet.SelectedOperation.Amount, Mode=TwoWay}" Width="auto"/>
+                </StackPanel>
+                <StackPanel Grid.Row="3" Orientation="Horizontal">
+                    <Label FontSize="15" FontWeight="Bold">O numerze:</Label>
+                    <TextBlock FontSize="15" VerticalAlignment="Center" Text="{Binding Wallet.SelectedOperation.ID, Mode=TwoWay}" Width="auto"/>
+                </StackPanel>
+            </Grid>
+        </StackPanel>
+    </Grid>
+</Window>
